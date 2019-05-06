@@ -313,7 +313,7 @@ std::wstring toRuleAttr(const std::wstring& style, const UT_StringHolder& name) 
 	std::string s = name.toStdString();
 	for (size_t i = 0; i < RULE_ATTR_NAME_TO_PRIM_ATTR_N; i++)
 		PLD_BOOST_NS::replace_all(s, RULE_ATTR_NAME_TO_PRIM_ATTR[i][1], RULE_ATTR_NAME_TO_PRIM_ATTR[i][0]);
-	return addStyle(toUTF16FromOSNarrow(s), style);
+	return toUTF16FromOSNarrow(s);
 }
 
 void separate(const std::wstring& fqName, std::wstring& style, std::wstring& name) {

@@ -84,7 +84,7 @@ bool evaluateDefaultRuleAttributes(
 		AttributeMapUPtr ruleAttr(amb->createAttributeMap());
 		isb->setAttributes(
 				shapeConverter->mRuleFile.c_str(),
-				shapeConverter->mStartRule.c_str(),
+				shapeConverter->getFullyQualifiedStartRule().c_str(),
 				shapeData.getInitialShapeRandomSeed(isIdx),
 				shapeName.c_str(),
 				ruleAttr.get(),
@@ -101,7 +101,7 @@ bool evaluateDefaultRuleAttributes(
 	assert(shapeData.isValid());
 
 	// run generate to evaluate default rule attributes
-	AttrEvalCallbacks aec(shapeData.getRuleAttributeMapBuilders(), ruleFileInfo);
+	AttrEvalCallbacks aec(shapeData.getRuleAttributeMapBuilders(), ruleFileInfo, shapeConverter->mStyle);
 	const InitialShapeNOPtrVector& is = shapeData.getInitialShapes();
 	const prt::Status stat = prt::generate(is.data(), is.size(), nullptr, encs, encsCount, encsOpts, &aec,
 	                                       prtCtx->mPRTCache.get(), nullptr, nullptr, nullptr);

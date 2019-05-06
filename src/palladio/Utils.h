@@ -83,7 +83,8 @@ inline void replace_all_not_of(std::wstring& s, const std::wstring& allowedChars
 	}
 }
 
-inline bool startsWithAnyOf(const std::string& s, const std::vector<std::string>& sv) {
+template<typename C>
+inline bool startsWithAnyOf(const std::basic_string<C>& s, const std::vector<std::basic_string<C>>& sv) {
 	for (const auto& v: sv) {
 		if (s.find(v) == 0)
 			return true;

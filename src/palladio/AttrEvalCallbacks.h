@@ -17,13 +17,14 @@
 #pragma once
 
 #include "Utils.h"
+#include "ShapeData.h"
 
 #include "prt/Callbacks.h"
 
 
 class AttrEvalCallbacks: public prt::Callbacks {
 public:
-	explicit AttrEvalCallbacks(AttributeMapBuilderVector& ambs, const RuleFileInfoUPtr& ruleFileInfo) : mAMBS(ambs), mRuleFileInfo(ruleFileInfo) { }
+	explicit AttrEvalCallbacks(AttributeMapBuilderVector& ambs, const RuleFileInfoUPtr& ruleFileInfo, const std::wstring& style) : mAMBS(ambs), mRuleFileInfo(ruleFileInfo), mStyle(style) { }
 	~AttrEvalCallbacks() override = default;
 
 	prt::Status generateError(size_t isIndex, prt::Status status, const wchar_t* message) override;
@@ -40,4 +41,5 @@ public:
 private:
 	AttributeMapBuilderVector& mAMBS;
 	const RuleFileInfoUPtr& mRuleFileInfo;
+	const std::wstring& mStyle;
 };

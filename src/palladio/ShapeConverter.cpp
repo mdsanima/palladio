@@ -317,5 +317,5 @@ RuleFileInfoUPtr ShapeConverter::getRuleFileInfo(const ResolveMapUPtr& resolveMa
 }
 
 std::wstring ShapeConverter::getFullyQualifiedStartRule() const {
-	return mStyle + L'$' + mStartRule;
+	return L"Default$" + mStartRule; // PRT does not have full style support yet
 }
