@@ -99,6 +99,11 @@ pld_add_dependency_houdini(${PROJECT_NAME})
 
 ### setup install target
 
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION .)
+if(PLD_WINDOWS)
+	install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION .)
+else()
+	install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION .)
+endif()
+
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/../../doc DESTINATION .)
 install(FILES ${PROJECT_SOURCE_DIR}/../../README.md ${PROJECT_SOURCE_DIR}/../../LICENSE DESTINATION .)
