@@ -61,7 +61,6 @@ if(PLD_CONAN_CESDK_DIR)
 	set(prt_DIR "${PLD_CONAN_CESDK_DIR}/cmake")
 	message(STATUS "Ignoring conan package for cesdk, using local path: ${prt_DIR}")
 else()
-	message("CONAN_CESDK_ROOT = ${CONAN_CESDK_ROOT}")
 	list(APPEND CMAKE_PREFIX_PATH "${CONAN_CESDK_ROOT}/esri_ce_sdk/cmake")
 endif()
 
