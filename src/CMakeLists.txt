@@ -17,12 +17,16 @@ endif()
 ### toolchain configuration
 
 function(add_toolchain_definition TGT)
+	set_target_properties(${TGT} PROPERTIES CXX_STANDARD 17)
 	if(PLD_WINDOWS)
 		target_compile_definitions(${TGT} PRIVATE -DPLD_WINDOWS=1 -DPLD_TC_VC=1)
 	elseif(PLD_LINUX)
 		target_compile_definitions(${TGT} PRIVATE -DPLD_LINUX=1 -DPLD_TC_GCC=1)
+		target_compile_options(${PROJECT_NAME} PRIVATE -fvisibility=hidden -fvisibility-inlines-hidden)
+		target_link_libraries(${PROJECT_NAME} PRIVATE stdc++fs) # GCC 8 needs explicit linking of C++17 std::filesystem lib
 	elseif(PLD_MACOS)
 		target_compile_definitions(${TGT} PRIVATE -DPLD_MACOS=1 -DPLD_TC_CLANG=1)
+		target_compile_options(${PROJECT_NAME} PRIVATE -fvisibility=hidden -fvisibility-inlines-hidden)
 	endif()
 endfunction()
 
