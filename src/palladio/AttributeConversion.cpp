@@ -64,7 +64,7 @@ void setHandleRange(const GA_IndexMap& indexMap, GA_RWBatchHandleS& handle, GA_O
     const UT_String attrValue = [&value]() {
 	    const auto sh = StringConversionCaches::toPrimAttr.get(value);
 	    if (sh)
-		    return sh.get();
+		    return sh.value();
 	    const std::string nv = toOSNarrowFromUTF16(value);
 	    UT_String hv(UT_String::ALWAYS_DEEP, nv); // ensure owning UT_String inside cache
 	    StringConversionCaches::toPrimAttr.insert(value, hv);
@@ -77,7 +77,7 @@ void setHandleRange(const GA_IndexMap& indexMap, GA_RWBatchHandleS& handle, GA_O
     if (DBG) LOG_DBG << "string attr: range = [" << start << ", " << start + size << "): " << handle.getAttribute()->getName() << " = " << attrValue;
 }
 
-class HandleVisitor : public PLD_BOOST_NS::static_visitor<> {
+class HandleVisitor {
 private:
 	const AttributeConversion::ProtoHandle& protoHandle;
 	const prt::AttributeMap*                attrMap;
@@ -244,9 +244,9 @@ void createAttributeHandles(GU_Detail* detail, HandleMap& handleMap) {
 				break;
 		}
 
-		if (handle.which() != 0) {
+		if (handle.index() != std::variant_npos) {
 			hm.second.handleType = handle;
-			if (DBG) LOG_DBG << "added attr handle " << utKey << " of type " << handle.type().name();
+			if (DBG) LOG_DBG << "added attr handle " << utKey << " of type " << typeid(handle).name();
 		}
 		else if (DBG) LOG_DBG << "could not update handle for primitive attribute " << utKey;
 	}
@@ -258,7 +258,7 @@ void setAttributeValues(HandleMap& handleMap, const prt::AttributeMap* attrMap,
 	for (auto& h: handleMap) {
 		if (attrMap->hasKey(h.second.key.c_str())) {
 			const HandleVisitor hv(h.second, attrMap, primIndexMap, rangeStart, rangeSize);
-			PLD_BOOST_NS::apply_visitor(hv, h.second.handleType);
+			std::visit(hv, h.second.handleType);
 		}
 	}
 }
@@ -296,7 +296,7 @@ UT_String toPrimAttr(const std::wstring& name) {
 
 	const auto cv = StringConversionCaches::toPrimAttr.get(name);
 	if (cv)
-		return cv.get();
+		return cv.value();
 
 	std::string s = toOSNarrowFromUTF16(removeStyle(name));
 	for (size_t i = 0; i < RULE_ATTR_NAME_TO_PRIM_ATTR_N; i++)

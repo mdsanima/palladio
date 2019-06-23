@@ -18,18 +18,16 @@
 
 #include "Utils.h"
 
-#include "BoostRedirect.h"
-#include PLD_BOOST_INCLUDE(/filesystem.hpp)
-
 #include <map>
 #include <chrono>
+#include <filesystem>
 
 
 class ResolveMapCache {
 public:
 	using KeyType = std::string;
 
-	explicit ResolveMapCache(const PLD_BOOST_NS::filesystem::path& unpackPath) : mRPKUnpackPath{unpackPath} { }
+	explicit ResolveMapCache(const std::filesystem::path& unpackPath) : mRPKUnpackPath{unpackPath} { }
 	ResolveMapCache(const ResolveMapCache&) = delete;
 	ResolveMapCache(ResolveMapCache&&) = delete;
 	ResolveMapCache& operator=(ResolveMapCache const&) = delete;
@@ -38,7 +36,7 @@ public:
 
 	enum class CacheStatus { HIT, MISS };
 	using LookupResult = std::pair<ResolveMapSPtr, CacheStatus>;
-	LookupResult get(const PLD_BOOST_NS::filesystem::path& rpk);
+	LookupResult get(const std::filesystem::path& rpk);
 
 private:
 	struct ResolveMapCacheEntry {
@@ -48,7 +46,7 @@ private:
 	using Cache = std::map<KeyType, ResolveMapCacheEntry>;
 	Cache mCache;
 
-	const PLD_BOOST_NS::filesystem::path mRPKUnpackPath;
+	const std::filesystem::path mRPKUnpackPath;
 };
 
 using ResolveMapCacheUPtr = std::unique_ptr<ResolveMapCache>;

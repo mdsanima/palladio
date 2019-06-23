@@ -21,6 +21,8 @@
 
 #include "SOP/SOP_Node.h"
 
+#include <filesystem>
+
 
 class SOPAssign : public SOP_Node {
 public:
@@ -28,7 +30,7 @@ public:
 	~SOPAssign() override = default;
 
 	const PRTContextUPtr& getPRTCtx() const { return mPRTCtx; }
-	const PLD_BOOST_NS::filesystem::path& getRPK() const { return mShapeConverter->mDefaultMainAttributes.mRPK; }
+	const std::filesystem::path& getRPK() const { return mShapeConverter->mDefaultMainAttributes.mRPK; }
 
 	void opChanged(OP_EventType reason, void* data = nullptr) override;
 

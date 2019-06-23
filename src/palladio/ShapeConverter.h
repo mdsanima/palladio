@@ -21,9 +21,7 @@
 
 #include "UT/UT_String.h"
 
-#include "BoostRedirect.h"
-#include PLD_BOOST_INCLUDE(/filesystem/path.hpp)
-
+#include <filesystem>
 #include <string>
 
 
@@ -44,7 +42,7 @@ const UT_String PLD_RANDOM_SEED = "pldRandomSeed";
 enum class GroupCreation { NONE, PRIMCLS };
 
 struct MainAttributes {
-	PLD_BOOST_NS::filesystem::path mRPK;
+	std::filesystem::path mRPK;
 	std::wstring                   mRuleFile;
 	std::wstring                   mStyle;
 	std::wstring                   mStartRule;

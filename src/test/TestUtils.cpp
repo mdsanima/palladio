@@ -20,6 +20,8 @@
 
 #include "catch2/catch.hpp"
 
+#include <filesystem>
+
 
 namespace {
 
@@ -33,7 +35,7 @@ constexpr const wchar_t* FILE_CGA_PRINT = L"CGAPrint.txt";
 
 void generate(TestCallbacks& tc,
               const PRTContextUPtr& prtCtx,
-              const PLD_BOOST_NS::filesystem::path& rpkPath,
+              const std::filesystem::path& rpkPath,
               const std::wstring& ruleFile,
               const std::vector<std::wstring>& initialShapeURIs,
               const std::vector<std::wstring>& startRules)

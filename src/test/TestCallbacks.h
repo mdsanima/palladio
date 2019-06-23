@@ -22,9 +22,6 @@
 #include "prt/API.h"
 #include "prt/AttributeMap.h"
 
-#include "../palladio/BoostRedirect.h"
-#include PLD_BOOST_INCLUDE(/variant.hpp)
-
 #include <vector>
 #include <string>
 

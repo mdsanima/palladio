@@ -27,6 +27,7 @@
 
 #include <string>
 #include <vector>
+#include <filesystem>
 
 
 namespace {
@@ -82,7 +83,7 @@ int updateRPK(void* data, int, fpreal32 time, const PRM_Template*) {
 
 	UT_String utNextRPKStr;
 	node->evalString(utNextRPKStr, AssignNodeParams::RPK.getToken(), 0, time);
-	const PLD_BOOST_NS::filesystem::path nextRPK(utNextRPKStr.toStdString());
+	const std::filesystem::path nextRPK(utNextRPKStr.toStdString());
 
 	ResolveMapSPtr resolveMap = prtCtx->getResolveMap(nextRPK);
 	if (!resolveMap ) {
@@ -136,7 +137,7 @@ void buildStartRuleMenu(void* data, PRM_Name* theMenu, int theMaxSize, const PRM
 	const PRTContextUPtr& prtCtx = node->getPRTCtx();
 
     const fpreal now = CHgetEvalTime();
-	const PLD_BOOST_NS::filesystem::path rpk = getRPK(node, now);
+	const std::filesystem::path rpk = getRPK(node, now);
 	const std::wstring ruleFile = getRuleFile(node, now);
 
 	if (DBG) {
@@ -204,7 +205,7 @@ void buildRuleFileMenu(void* data, PRM_Name* theMenu, int theMaxSize, const PRM_
 	const auto& prtCtx = node->getPRTCtx();
 
     const fpreal now = CHgetEvalTime();
-	const PLD_BOOST_NS::filesystem::path rpk = getRPK(node, now);
+	const std::filesystem::path rpk = getRPK(node, now);
 
 	ResolveMapSPtr resolveMap = prtCtx->getResolveMap(rpk);
 	if (!resolveMap) {
@@ -234,7 +235,7 @@ void buildStyleMenu(void* data, PRM_Name* theMenu, int theMaxSize, const PRM_Spa
 	const PRTContextUPtr& prtCtx = node->getPRTCtx();
 
     const fpreal now = CHgetEvalTime();
-	const PLD_BOOST_NS::filesystem::path rpk = getRPK(node, now);
+	const std::filesystem::path rpk = getRPK(node, now);
 	const std::wstring ruleFile = getRuleFile(node, now);
 
 	ResolveMapSPtr resolveMap = prtCtx->getResolveMap(rpk);

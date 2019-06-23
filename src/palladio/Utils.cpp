@@ -26,11 +26,11 @@
 #endif
 #include "BoostRedirect.h"
 #include PLD_BOOST_INCLUDE(/algorithm/string.hpp)
-#include PLD_BOOST_INCLUDE(/filesystem.hpp)
 #ifndef _WIN32
 #	pragma GCC diagnostic pop
 #endif
 
+#include <filesystem>
 
 #ifdef _WIN32
 #	include <Windows.h>
@@ -92,7 +92,7 @@ std::string objectToXML(prt::Object const* obj) {
 	return std::string(buffer.data());
 }
 
-void getLibraryPath(PLD_BOOST_NS::filesystem::path& path, const void* func) {
+void getLibraryPath(std::filesystem::path& path, const void* func) {
 #ifdef _WIN32
 	HMODULE dllHandle = 0;
 	if(!GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, (LPCSTR)getLibraryPath, &dllHandle)) {
@@ -183,7 +183,7 @@ std::string toUTF8FromOSNarrow(const std::string& osString) {
 	return std::string(temp.data());
 }
 
-std::wstring toFileURI(const PLD_BOOST_NS::filesystem::path& p) {
+std::wstring toFileURI(const std::filesystem::path& p) {
 #ifdef _WIN32
 	static const std::wstring schema = L"file:/";
 #else

@@ -22,8 +22,7 @@
 
 #include "prt/Object.h"
 
-#include "BoostRedirect.h"
-#include PLD_BOOST_INCLUDE(/filesystem.hpp)
+#include <filesystem>
 
 #include <map>
 
@@ -37,14 +36,14 @@ using LogHandlerPtr = std::unique_ptr<LogHandler>;
  * manage PRT "lifetime" (actually, its license lifetime)
  */
 struct PLD_TEST_EXPORTS_API PRTContext final {
-	explicit PRTContext(const std::vector<PLD_BOOST_NS::filesystem::path>& addExtDirs = {});
+	explicit PRTContext(const std::vector<std::filesystem::path>& addExtDirs = {});
 	PRTContext(const PRTContext&) = delete;
 	PRTContext(PRTContext&&) = delete;
 	PRTContext& operator=(PRTContext&) = delete;
 	PRTContext& operator=(PRTContext&&) = delete;
 	~PRTContext();
 
-	ResolveMapSPtr getResolveMap(const PLD_BOOST_NS::filesystem::path& rpk);
+	ResolveMapSPtr getResolveMap(const std::filesystem::path& rpk);
 	bool isAlive() const { return mPRTHandle.operator bool(); }
 
 	logging::LogHandlerPtr  mLogHandler;

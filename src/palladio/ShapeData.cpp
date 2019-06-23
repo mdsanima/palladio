@@ -26,7 +26,7 @@ const std::wstring INVALID_GROUP_NAME     = L"_invalid_";
 /**
  * creates initial shape and primitive group name from primitive classifier value
  */
-class NameFromPrimPart : public PLD_BOOST_NS::static_visitor<> {
+class NameFromPrimPart {
 public:
 	NameFromPrimPart(std::wstring& name, const std::wstring& prefix) : mName(name), mPrefix(prefix) { }
 
@@ -68,7 +68,7 @@ void ShapeData::addBuilder(InitialShapeBuilderUPtr&& isb, int32_t randomSeed,
 	if (mGroupCreation == GroupCreation::PRIMCLS) {
 		std::wstring name;
 		NameFromPrimPart npp(name, mNamePrefix);
-		PLD_BOOST_NS::apply_visitor(npp, clsVal);
+		std::visit(npp, clsVal);
 		mInitialShapeNames.push_back(name);
 	}
 }
