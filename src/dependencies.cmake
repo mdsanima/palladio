@@ -5,6 +5,11 @@ include(${PLD_CONAN_TOOLS}/conan-0.14.cmake)
 conan_check(VERSION 1.16 REQUIRED)
 
 
+### additional remotes
+
+conan_add_remote(NAME catchorg INDEX 0 URL https://api.bintray.com/conan/catchorg/Catch2)
+
+
 ### select Houdini version and required toolchain
 
 if (NOT PLD_HOUDINI_VERSION)
@@ -114,5 +119,5 @@ endfunction()
 ### catch2 dependency
 
 function(pld_add_dependency_catch2 TGT)
-	target_link_libraries(${TGT} PRIVATE CONAN_PKG::catch2)
+	target_link_libraries(${TGT} PRIVATE CONAN_PKG::Catch2)
 endfunction()

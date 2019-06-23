@@ -9,7 +9,7 @@ class PalladioConan(ConanFile):
 
     def requirements(self):
         self.requires("boost/1.66.0@conan/stable")
-        self.requires("catch2/2.0.1@bincrafters/stable")
+        self.requires("Catch2/2.9.1@catchorg/stable")
 
         if "PLD_CONAN_HOUDINI_VERSION" in os.environ:
             self.requires("houdini/{}@sidefx/stable".format(os.environ["PLD_CONAN_HOUDINI_VERSION"]))

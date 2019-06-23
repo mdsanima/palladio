@@ -31,7 +31,7 @@
 #include PLD_BOOST_INCLUDE(/filesystem/path.hpp)
 
 #define CATCH_CONFIG_RUNNER
-#include "catch.hpp"
+#include "catch2/catch.hpp"
 
 #include <algorithm>
 
