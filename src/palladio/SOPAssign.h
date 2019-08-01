@@ -21,6 +21,9 @@
 
 #include "SOP/SOP_Node.h"
 
+#include "BoostRedirect.h"
+#include PLD_BOOST_INCLUDE(/variant.hpp)
+
 
 class SOPAssign : public SOP_Node {
 public:
@@ -34,8 +37,13 @@ public:
 
 protected:
 	OP_ERROR cookMySop(OP_Context& context) override;
+	void captureOverridableAttributes(const ShapeData& shapeData);
 
 private:
 	const PRTContextUPtr& mPRTCtx;
 	ShapeConverterUPtr    mShapeConverter;
+
+public:
+	using AttributeValueType = PLD_BOOST_NS::variant<std::wstring, double, bool>;
+	std::map<std::wstring, AttributeValueType> mOverridableAttributes;
 };

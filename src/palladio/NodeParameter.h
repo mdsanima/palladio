@@ -129,14 +129,35 @@ const auto setStartRule = [](OP_Node* node, const std::wstring& s, fpreal t) {
 };
 
 
+// -- OVERRIDABLE ATTRIBUTES
+static PRM_Name ATTRIBUTE("attribute#", "Attribute");
+void buildAttributeMenu(void *data, PRM_Name *theMenu, int theMaxSize, const PRM_SpareData *, const PRM_Parm *);
+int updateAttributeDefaultValue(void* data, int index, fpreal32 time, const PRM_Template*);
+static PRM_Callback attributeCallback(&updateAttributeDefaultValue);
+static PRM_ChoiceList attributeMenu(static_cast<PRM_ChoiceListType>(PRM_CHOICELIST_REPLACE), &buildAttributeMenu);
+
+static PRM_Name ATTRIBUTE_VALUE("value#", "Value");
+
+static PRM_Name ATTRIBUTES_OVERRIDE("attributesOverride", "Attribute Overrides");
+static PRM_Template PARAM_ATTRIBUTE_TEMPLATE[] = {
+	PRM_Template(PRM_STRING,1, &ATTRIBUTE, PRMoneDefaults, &attributeMenu, nullptr, attributeCallback, nullptr),
+	PRM_Template(PRM_STRING, 1, &ATTRIBUTE_VALUE, PRMoneDefaults, nullptr, nullptr, PRM_Callback(), nullptr),
+	PRM_Template()
+};
+
+
 // -- ASSIGN NODE PARAMS
 static PRM_Template PARAM_TEMPLATES[] = {
 		PRM_Template(PRM_STRING,   1, &PRIM_CLS,   &PRIM_CLS_DEFAULT, nullptr,        nullptr, PRM_Callback(), nullptr,                             1, PRIM_CLS_HELP.c_str()),
+
+		// TODO: add checkbox to make main attrs optional
 		PRM_Template(PRM_FILE,     1, &RPK,        &RPK_DEFAULT,      nullptr,        nullptr, rpkCallback,    &PRM_SpareData::fileChooserModeRead, 1, RPK_HELP.c_str()),
 		PRM_Template(PRM_CALLBACK, 1, &RPK_RELOAD, PRMoneDefaults,    nullptr,        nullptr, rpkCallback),
 		PRM_Template(PRM_STRING,   1, &RULE_FILE,  PRMoneDefaults,    &ruleFileMenu,  nullptr, PRM_Callback(), nullptr,                             1, RULE_FILE_HELP.c_str()),
 		PRM_Template(PRM_STRING,   1, &STYLE,      PRMoneDefaults,    &styleMenu,     nullptr, PRM_Callback(), nullptr,                             1, STYLE_HELP.c_str()),
 		PRM_Template(PRM_STRING,   1, &START_RULE, PRMoneDefaults,    &startRuleMenu, nullptr, PRM_Callback(), nullptr,                             1, START_RULE_HELP.c_str()),
+
+		PRM_Template(PRM_MULTITYPE_LIST, PARAM_ATTRIBUTE_TEMPLATE, 0.0f, &ATTRIBUTES_OVERRIDE),
 		PRM_Template()
 };
 
