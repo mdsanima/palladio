@@ -34,6 +34,7 @@ class SOP_Node;
 class PrimitiveClassifier;
 class MainAttributeHandles;
 class ShapeData;
+class SOPAssign;
 
 const UT_String PLD_RPK         = "pldRPK";
 const UT_String PLD_RULE_FILE   = "pldRuleFile";
@@ -54,7 +55,7 @@ class ShapeConverter {
 public:
 	virtual void get(const GU_Detail* detail,  const PrimitiveClassifier& primCls,
 	                 ShapeData& shapeData, const PRTContextUPtr& prtCtx);
-	void put(GU_Detail* detail, PrimitiveClassifier& primCls, const ShapeData& shapeData) const;
+	void put(SOPAssign* node, OP_Context& context, GU_Detail* detail, PrimitiveClassifier& primCls, const ShapeData& shapeData) const;
 
 	void getMainAttributes(SOP_Node* node, const OP_Context& context); // TODO: integrate into get
 	MainAttributes getMainAttributesFromPrimitive(const GU_Detail* detail, const GA_Primitive* prim) const;
