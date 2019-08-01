@@ -137,12 +137,16 @@ int updateAttributeDefaultValue(void* data, int index, fpreal32 time, const PRM_
 static PRM_Callback attributeCallback(&updateAttributeDefaultValue);
 static PRM_ChoiceList attributeMenu(PRM_CHOICELIST_SINGLE, &buildAttributeMenu);
 
-static PRM_Name ATTRIBUTE_VALUE("value#", "Value");
+static PRM_Name ATTRIBUTE_STRING_VALUE("stringValue#", "Value");
+static PRM_Name ATTRIBUTE_FLOAT_VALUE("floatValue#", "Value");
+static PRM_Name ATTRIBUTE_BOOL_VALUE("boolValue#", "Value");
 
 static PRM_Name ATTRIBUTES_OVERRIDE("attributesOverride", "Attribute Overrides");
 static PRM_Template PARAM_ATTRIBUTE_TEMPLATE[] = {
 	PRM_Template(PRM_STRING,1, &ATTRIBUTE, PRMoneDefaults, &attributeMenu, nullptr, attributeCallback, nullptr),
-	PRM_Template(PRM_STRING, 1, &ATTRIBUTE_VALUE, PRMoneDefaults, nullptr, nullptr, PRM_Callback(), nullptr),
+	PRM_Template(PRM_STRING, 1, &ATTRIBUTE_STRING_VALUE, PRMoneDefaults, nullptr, nullptr, PRM_Callback(), nullptr),
+	PRM_Template(PRM_FLT, 1, &ATTRIBUTE_FLOAT_VALUE, PRMoneDefaults, nullptr, nullptr, PRM_Callback(), nullptr),
+	PRM_Template(PRM_TOGGLE, 1, &ATTRIBUTE_BOOL_VALUE, PRMoneDefaults, nullptr, nullptr, PRM_Callback(), nullptr),
 	PRM_Template()
 };
 
@@ -160,7 +164,7 @@ static PRM_Template PARAM_TEMPLATES[] = {
 		PRM_Template(PRM_STRING,   1, &STYLE,      PRMoneDefaults,    &styleMenu,     nullptr, PRM_Callback(), nullptr,                             1, STYLE_HELP.c_str()),
 		PRM_Template(PRM_STRING,   1, &START_RULE, PRMoneDefaults,    &startRuleMenu, nullptr, PRM_Callback(), nullptr,                             1, START_RULE_HELP.c_str()),
 
-		PRM_Template(PRM_MULTITYPE_LIST, PARAM_ATTRIBUTE_TEMPLATE, 0.0f, &ATTRIBUTES_OVERRIDE),
+		PRM_Template(PRM_MULTITYPE_LIST, PARAM_ATTRIBUTE_TEMPLATE, 0.0f, &ATTRIBUTES_OVERRIDE, nullptr, nullptr, nullptr, nullptr, nullptr, attributeCallback),
 		PRM_Template()
 };
 
