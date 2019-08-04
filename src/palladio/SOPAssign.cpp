@@ -26,6 +26,7 @@
 
 #include "prt/API.h"
 
+#include "CH/CH_Manager.h"
 #include "UT/UT_Interrupt.h"
 
 #include "BoostRedirect.h"
@@ -201,7 +202,7 @@ void SOPAssign::captureOverridableAttributes(const ShapeData& shapeData) {
 			const wchar_t* const key = cKeys[k];
 			const auto type = defaultRuleAttributes->getType(key);
 
-			AttributeValueType defVal;
+			AssignNodeParams::AttributeValueType defVal;
 			switch (type) {
 				case prt::AttributeMap::PT_FLOAT: {
 					defVal = defaultRuleAttributes->getFloat(key);
@@ -225,4 +226,10 @@ void SOPAssign::captureOverridableAttributes(const ShapeData& shapeData) {
 				mOverridableAttributes.emplace(key, defVal);
 		}
 	}
+}
+
+bool SOPAssign::updateParmsFlags() {
+	bool changed = SOP_Node::updateParmsFlags();
+	changed |= AssignNodeParams::updateParmsFlags(*this, CHgetEvalTime());
+	return changed;
 }
