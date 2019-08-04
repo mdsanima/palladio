@@ -19,13 +19,12 @@
 #include "PRTContext.h"
 #include "SOPAssign.h"
 #include "SOPGenerate.h"
+#include "RulePackageFS.h"
 #include "NodeParameter.h"
 
 #include "OP/OP_OperatorTable.h"
 #include "UT/UT_Exit.h"
 
-//#undef major // fixes warning regarding duplicate macros in <sys/types.h> and <sys/sysmacros.h>
-//#undef minor
 #include "UT/UT_DSOVersion.h"
 
 
@@ -33,6 +32,9 @@ namespace {
 
 // prt lifecycle
 PRTContextUPtr prtCtx;
+
+std::unique_ptr<RulePackageReader> rpkReader;
+std::unique_ptr<RulePackageInfoHelper> rpkInfoHelper;
 
 } // namespace
 
@@ -61,4 +63,9 @@ void newSopOperator(OP_OperatorTable *table) {
 	table->addOperator(new OP_Operator(OP_PLD_GENERATE, OP_PLD_GENERATE, createSOPGenerate,
 	       GenerateNodeParams::PARAM_TEMPLATES, 1, 1, nullptr, OP_FLAG_GENERATOR
 	));
+}
+
+void installFSHelpers() {
+	rpkReader = std::make_unique<RulePackageReader>();
+    rpkInfoHelper = std::make_unique<RulePackageInfoHelper>();
 }

@@ -27,7 +27,8 @@ add_library(${PROJECT_NAME} SHARED
 		PrimitiveClassifier.cpp
 		LogHandler.h
 		LRUCache.h
-		BoostRedirect.h)
+		BoostRedirect.h
+		RulePackageFS.cpp)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
 		${palladio_codec_SOURCE_DIR}
